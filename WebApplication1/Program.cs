@@ -1,8 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Application.Interfaces;
+using WebApplication1.Application.Mappings;
+using WebApplication1.Application.Services;
 using WebApplication1.Domain.Entities;
 using WebApplication1.Infrastructure.Data;
 using WebApplication1.Infrastructure.Repositories;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,15 +15,32 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         "Server=nalaie\\MSSQLSERVER2022;Database=ConsoleApp2Db;Trusted_Connection=True;TrustServerCertificate=True;",
         sqlOptions => sqlOptions.CommandTimeout(600)));
 
+// Register AutoMapper with the MappingProfile
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 // Register repositories
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
-
 // Register controllers
 builder.Services.AddControllers();
 
-// Swagger (nếu muốn)
+builder.Services.AddScoped<ICommentService, CommentService>();
+
+builder.Services.AddMemoryCache();
+
+// Add Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Add CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
 
 var app = builder.Build();
 
@@ -134,6 +154,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Enable CORS
+app.UseCors();
 app.UseHttpsRedirection();
 
 // Map controllers

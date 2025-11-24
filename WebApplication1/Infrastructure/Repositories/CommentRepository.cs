@@ -14,6 +14,11 @@ public class CommentRepository : ICommentRepository
         _context = context;
     }
 
+    public async Task<Comment?> GetByIdAsync(Guid commentId)
+    {
+        return await _context.Comments.FindAsync(commentId);
+    }
+
     // ===================== READ =====================
     public async Task<List<Comment>> GetAllCommentsForPost(Guid postId, bool includeReplies = true)
     {

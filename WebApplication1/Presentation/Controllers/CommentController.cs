@@ -1,6 +1,7 @@
+// Presentation/Controllers/CommentsController.cs
 using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Application.Interfaces;
-using WebApplication1.Domain.Entities;
+using WebApplication1.Application.DTOs;
+using WebApplication1.Application.Services;
 
 namespace WebApplication1.Presentation.Controllers;
 
@@ -8,42 +9,42 @@ namespace WebApplication1.Presentation.Controllers;
 [Route("api/[controller]")]
 public class CommentsController : ControllerBase
 {
-    private readonly ICommentRepository _repo;
+    private readonly ICommentService _service;
 
-    public CommentsController(ICommentRepository repo)
+    public CommentsController(ICommentService service)
     {
-        _repo = repo;
+        _service = service;
     }
 
     // GET: api/comments/{postId}/tree
     [HttpGet("{postId}/tree")]
     public async Task<IActionResult> GetTree(Guid postId)
     {
-        var comments = await _repo.GetAllCommentsForPost(postId);
+        var comments = await _service.GetCommentTreeAsync(postId);
         return Ok(comments);
     }
 
-    // GET: api/comments/{postId}/flat
-    [HttpGet("{postId}/flat")]
-    public async Task<IActionResult> GetFlat(Guid postId)
+    // GET: api/comments/flatten?postId={postId}
+    [HttpGet("flatten")]
+    public async Task<IActionResult> GetFlatten([FromQuery] Guid postId)
     {
-        var comments = await _repo.GetAllCommentsRecursive(postId);
+        var comments = await _service.GetCommentFlattenAsync(postId);
         return Ok(comments);
     }
 
     // POST: api/comments
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] Comment comment)
+    public async Task<IActionResult> Create([FromBody] CreateCommentDto dto)
     {
-        var created = await _repo.CreateAsync(comment);
-        return CreatedAtAction(nameof(GetTree), new { postId = comment.PostId }, created);
+        var created = await _service.CreateCommentAsync(dto);
+        return CreatedAtAction(nameof(GetTree), new { postId = dto.PostId }, created);
     }
 
     // PUT: api/comments/{id}
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, [FromBody] Comment comment)
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateCommentDto dto)
     {
-        var updated = await _repo.UpdateAsync(id, comment.Content);
+        var updated = await _service.UpdateCommentAsync(id, dto);
         if (updated == null) return NotFound();
         return Ok(updated);
     }
@@ -52,7 +53,7 @@ public class CommentsController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var success = await _repo.DeleteAsync(id);
+        var success = await _service.DeleteCommentAsync(id);
         if (!success) return NotFound();
         return NoContent();
     }

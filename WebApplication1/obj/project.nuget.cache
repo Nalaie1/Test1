@@ -1,11 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "9EIe+rMJpw4=",
+  "dgSpecHash": "HS4C7lPaLxU=",
   "success": true,
   "projectFilePath": "C:\\Users\\Admin\\RiderProjects\\MiniProject\\WebApplication1\\WebApplication1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
-    "C:\\Users\\Admin\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
@@ -92,24 +91,10 @@
   ],
   "logs": [
     {
-      "code": "NU1608",
-      "level": "Warning",
-      "message": "Detected package version outside of dependency constraint: AutoMapper.Extensions.Microsoft.DependencyInjection 12.0.1 requires AutoMapper (= 12.0.1) but version AutoMapper 13.0.1 was resolved.",
-      "projectPath": "C:\\Users\\Admin\\RiderProjects\\MiniProject\\WebApplication1\\WebApplication1.csproj",
-      "warningLevel": 1,
-      "filePath": "C:\\Users\\Admin\\RiderProjects\\MiniProject\\WebApplication1\\WebApplication1.csproj",
-      "libraryId": "AutoMapper",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    },
-    {
       "code": "NU1903",
       "level": "Warning",
-      "message": "Package 'System.Linq.Dynamic.Core' 1.4.2 has a known high severity vulnerability, https://github.com/advisories/GHSA-4cv2-4hjh-77rx",
-      "projectPath": "C:\\Users\\Admin\\RiderProjects\\MiniProject\\WebApplication1\\WebApplication1.csproj",
       "warningLevel": 1,
-      "filePath": "C:\\Users\\Admin\\RiderProjects\\MiniProject\\WebApplication1\\WebApplication1.csproj",
+      "message": "Package 'System.Linq.Dynamic.Core' 1.4.2 has a known high severity vulnerability, https://github.com/advisories/GHSA-4cv2-4hjh-77rx",
       "libraryId": "System.Linq.Dynamic.Core",
       "targetGraphs": [
         "net8.0"
