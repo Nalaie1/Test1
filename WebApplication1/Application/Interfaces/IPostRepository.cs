@@ -5,7 +5,7 @@ namespace WebApplication1.Application.Interfaces;
 
 public interface IPostRepository
 {
-    Task<PagedResultDto<Post>> GetPagedAsync(QueryParametersDto parameters);
+    Task<PagedResultDto<Post>> GetPagedAsync(PostQueryParametersDto parameters);
     Task<Post?> GetByIdAsync(Guid id);
     Task<Post> CreateAsync(Post post);
     Task<Post?> UpdateAsync(Guid id, Post post);

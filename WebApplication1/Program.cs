@@ -19,6 +19,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 // Register repositories
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<IPostRepository, PostRepository>();
 
 // Register controllers
 builder.Services.AddControllers();

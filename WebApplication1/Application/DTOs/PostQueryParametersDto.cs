@@ -1,6 +1,6 @@
 ﻿namespace WebApplication1.Application.DTOs;
 
-public class QueryParametersDto
+public class PostQueryParametersDto
 {
     public int PageNumber { get; set; } = 1;
     public int PageSize { get; set; } = 10;

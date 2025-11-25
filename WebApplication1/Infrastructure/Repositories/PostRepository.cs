@@ -18,7 +18,7 @@ public class PostRepository : IPostRepository
         _context = context;
     }
 
-    public async Task<PagedResultDto<Post>> GetPagedAsync(QueryParametersDto parameters)
+    public async Task<PagedResultDto<Post>> GetPagedAsync(PostQueryParametersDto parameters)
     {
         var query = _context.Posts
             .Include(p => p.User)
