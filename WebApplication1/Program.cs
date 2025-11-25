@@ -5,7 +5,6 @@ using WebApplication1.Application.Services;
 using WebApplication1.Domain.Entities;
 using WebApplication1.Infrastructure.Data;
 using WebApplication1.Infrastructure.Repositories;
-using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +19,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 // Register repositories
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+
 // Register controllers
 builder.Services.AddControllers();
 

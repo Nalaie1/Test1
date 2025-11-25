@@ -50,12 +50,9 @@ public class CommentRepository : ICommentRepository
 
             var result = new List<Comment>();
             var topLevelComments = allComments.Where(c => c.ParentCommentId == null).ToList();
-            
+
             // Collect tất cả comments bằng recursive traversal
-            foreach (var topComment in topLevelComments)
-            {
-                CollectCommentsRecursive(topComment, allComments, result);
-            }
+            foreach (var topComment in topLevelComments) CollectCommentsRecursive(topComment, allComments, result);
 
             return result;
         }
@@ -70,17 +67,6 @@ public class CommentRepository : ICommentRepository
             )
             SELECT * FROM CommentCTE";
         return await _context.Comments.FromSqlRaw(sql, postId).ToListAsync();
-    }
-
-    private void CollectCommentsRecursive(Comment comment, List<Comment> allComments, List<Comment> result)
-    {
-        result.Add(comment); // Thêm comment vào flat list
-        
-        var replies = allComments.Where(c => c.ParentCommentId == comment.Id).ToList();
-        foreach (var reply in replies)
-        {
-            CollectCommentsRecursive(reply, allComments, result); // Đệ quy
-        }
     }
 
     public async Task<List<Comment>> GetAllCommentsIterative(Guid postId)
@@ -159,5 +145,13 @@ public class CommentRepository : ICommentRepository
         _context.Comments.Remove(comment);
         await _context.SaveChangesAsync();
         return true;
+    }
+
+    private void CollectCommentsRecursive(Comment comment, List<Comment> allComments, List<Comment> result)
+    {
+        result.Add(comment); // Thêm comment vào flat list
+
+        var replies = allComments.Where(c => c.ParentCommentId == comment.Id).ToList();
+        foreach (var reply in replies) CollectCommentsRecursive(reply, allComments, result); // Đệ quy
     }
 }

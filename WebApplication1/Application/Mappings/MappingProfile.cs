@@ -30,7 +30,7 @@ public class MappingProfile : Profile
     private static List<CommentDto> MapReplies(Comment comment, int depth)
     {
         var result = new List<CommentDto>();
-        
+
         foreach (var reply in comment.Replies)
         {
             var replyDto = new CommentDto
@@ -46,6 +46,7 @@ public class MappingProfile : Profile
             };
             result.Add(replyDto);
         }
+
         return result;
     }
 }

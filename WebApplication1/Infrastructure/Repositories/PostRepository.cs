@@ -1,4 +1,5 @@
 ﻿// Infrastructure/Repositories/PostRepository.cs
+
 using System.Linq.Dynamic.Core;
 using Microsoft.EntityFrameworkCore;
 using WebApplication1.Application.DTOs;
@@ -26,16 +27,11 @@ public class PostRepository : IPostRepository
 
         // Filtering
         if (!string.IsNullOrEmpty(parameters.SearchTerm))
-        {
-            query = query.Where(p => 
-                p.Title.Contains(parameters.SearchTerm) || 
+            query = query.Where(p =>
+                p.Title.Contains(parameters.SearchTerm) ||
                 p.Content.Contains(parameters.SearchTerm));
-        }
 
-        if (parameters.UserId.HasValue)
-        {
-            query = query.Where(p => p.UserId == parameters.UserId.Value);
-        }
+        if (parameters.UserId.HasValue) query = query.Where(p => p.UserId == parameters.UserId.Value);
 
         // Sorting với Dynamic LINQ
         if (!string.IsNullOrEmpty(parameters.SortBy))

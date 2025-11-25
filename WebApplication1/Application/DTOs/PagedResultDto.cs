@@ -1,6 +1,6 @@
 ﻿namespace WebApplication1.Application.DTOs;
 
-public class PagedResultDto <T>
+public class PagedResultDto<T>
 {
     public List<T> Items { get; set; } = new();
     public int TotalCount { get; set; }
