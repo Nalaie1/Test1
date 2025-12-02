@@ -4,6 +4,10 @@ using WebApplication1.Domain.Entities;
 
 namespace WebApplication1.Application.Mappings;
 
+/// <summary>
+/// Chuyển đổi giữa các entity và DTOs
+/// </summary>
+
 public class MappingProfile : Profile
 {
     public MappingProfile()

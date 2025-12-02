@@ -18,6 +18,9 @@ public class PostRepository : IPostRepository
         _context = context;
     }
 
+    /// <summary>
+    /// Lấy danh sách bài viết có phân trang, lọc, sắp xếp
+    /// </summary>
     public async Task<PagedResultDto<Post>> GetPagedAsync(PostQueryParametersDto parameters)
     {
         var query = _context.Posts
@@ -62,15 +65,20 @@ public class PostRepository : IPostRepository
         };
     }
 
-    // Other methods...
-    public async Task<Post?> GetByIdAsync(Guid id)
+    /// <summary>
+    /// Lấy bài viết theo Id
+    /// </summary>
+    public async Task<Post?> GetByIdAsync(Guid PostId)
     {
         return await _context.Posts
             .Include(p => p.User)
             .Include(p => p.Comments)
-            .FirstOrDefaultAsync(p => p.Id == id);
+            .FirstOrDefaultAsync(p => p.Id == PostId);
     }
 
+    /// <summary>
+    /// Tạo mới bài viết
+    /// </summary>
     public async Task<Post> CreateAsync(Post post)
     {
         post.Id = Guid.NewGuid();
@@ -79,17 +87,23 @@ public class PostRepository : IPostRepository
         return post;
     }
 
-    public async Task<Post?> UpdateAsync(Guid id, Post updated)
+    /// <summary>
+    /// Cập nhật bài viết
+    /// </summary>
+    public async Task<Post?> UpdateAsync(Guid id, string NewContent)
     {
         var post = await _context.Posts.FindAsync(id);
         if (post == null) return null;
 
-        post.Title = updated.Title;
-        post.Content = updated.Content;
+        post.Title = NewContent;
+        post.Content = NewContent;
         await _context.SaveChangesAsync();
         return post;
     }
-
+    
+    /// <summary>
+    /// Xóa bài viết
+    /// </summary>
     public async Task<bool> DeleteAsync(Guid id)
     {
         var post = await _context.Posts.FindAsync(id);

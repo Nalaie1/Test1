@@ -1,12 +1,19 @@
+using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using WebApplication1.Application.Interfaces;
 using WebApplication1.Application.Mappings;
 using WebApplication1.Application.Services;
 using WebApplication1.Domain.Entities;
 using WebApplication1.Infrastructure.Data;
 using WebApplication1.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using WebApplication1.Infrastructure.JWT;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var config = builder.Configuration;
 
 // ===== Add services =====
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -20,13 +27,41 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 // Register repositories
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 
 // Register controllers
 builder.Services.AddControllers();
 
 builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
 
+/// Add Memory Cache
 builder.Services.AddMemoryCache();
+
+/// Add JWT Authentication
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        // Cấu hình xác thực JWT
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = config["JwtSettings:Issuer"],
+            ValidAudience = config["JwtSettings:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(config["JwtSettings:Secret"]))
+        };
+    });
 
 // Add Swagger
 builder.Services.AddEndpointsApiExplorer();

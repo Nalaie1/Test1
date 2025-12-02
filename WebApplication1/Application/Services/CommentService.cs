@@ -1,10 +1,14 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.Extensions.Caching.Memory;
 using WebApplication1.Application.DTOs;
 using WebApplication1.Application.Interfaces;
 using WebApplication1.Domain.Entities;
 
 namespace WebApplication1.Application.Services;
+
+/// <summary>
+/// Xử lý logic liên quan đến bình luận
+/// </summary>
 
 public class CommentService : ICommentService
 {
@@ -19,14 +23,19 @@ public class CommentService : ICommentService
         _cache = cache;
     }
 
+    /// <summary>
+    /// Lấy cây bình luận cho một bài viết
+    /// </summary>
     public async Task<List<CommentDto>> GetCommentTreeAsync(Guid postId)
     {
+        /// <summary>
+        /// Cache key để lưu cây bình luận
+        /// </summary>
         var cacheKey = $"CommentTree_{postId.ToString()}";
         if (!_cache.TryGetValue(cacheKey, out List<CommentDto> cachedTree))
         {
             var comments = await _repository.GetAllCommentsForPost(postId);
             cachedTree = MapToCommentTree(comments);
-
             var cacheEntryOptions = new MemoryCacheEntryOptions()
                 .SetSlidingExpiration(TimeSpan.FromMinutes(5));
 
@@ -36,9 +45,15 @@ public class CommentService : ICommentService
         return cachedTree;
     }
 
+    /// <summary>
+    /// Lấy danh sách bình luận phẳng cho một bài viết
+    /// </summary>
     public async Task<List<CommentFlattenDto>> GetCommentFlattenAsync(Guid postId)
     {
         var cacheKey = $"CommentFlatten_{postId.ToString()}";
+        ///<summary>
+        /// Cache danh sách bình luận phẳng
+        ///</summary>
         if (!_cache.TryGetValue(cacheKey, out List<CommentFlattenDto> cachedFlatten))
         {
             var comments = await _repository.GetAllCommentsRecursive(postId);
@@ -53,8 +68,10 @@ public class CommentService : ICommentService
         return cachedFlatten;
     }
 
-    // Implement other methods...
-    public async Task<CommentDto> CreateCommentAsync(CreateCommentDto dto)
+    /// <summary>
+    /// Tạo mới bình luận
+    /// </summary>
+    public async Task<CommentDto> CreateCommentAsync(CommentCreateDto dto)
     {
         var comment = new Comment
         {
@@ -70,7 +87,10 @@ public class CommentService : ICommentService
         return MapCommentRecursive(created, 0);
     }
 
-    public async Task<CommentDto?> UpdateCommentAsync(Guid id, UpdateCommentDto dto)
+    /// <summary>
+    /// Cập nhật bình luận
+    /// </summary>
+    public async Task<CommentDto?> UpdateCommentAsync(Guid id, CommentUpdateDto dto)
     {
         var updated = await _repository.UpdateAsync(id, dto.Content);
         if (updated == null) return null;
@@ -80,6 +100,9 @@ public class CommentService : ICommentService
         return MapCommentRecursive(updated, 0);
     }
 
+    /// <summary>
+    /// Xóa bình luận
+    /// </summary>
     public async Task<bool> DeleteCommentAsync(Guid id)
     {
         var comment = await _repository.GetByIdAsync(id);
@@ -95,6 +118,9 @@ public class CommentService : ICommentService
         return result;
     }
 
+    /// <summary>
+    /// Map danh sách bình luận thành cây bình luận
+    /// </summary>
     private List<CommentDto> MapToCommentTree(List<Comment> comments)
     {
         var result = new List<CommentDto>();
@@ -104,6 +130,9 @@ public class CommentService : ICommentService
         return result;
     }
 
+    /// <summary>
+    /// Map bình luận và các phản hồi đệ quy
+    /// </summary>
     private CommentDto MapCommentRecursive(Comment comment, int depth)
     {
         var dto = _mapper.Map<CommentDto>(comment);
@@ -117,6 +146,9 @@ public class CommentService : ICommentService
         return dto;
     }
 
+    /// <summary>
+    /// Chuyển danh sách bình luận thành danh sách phẳng có thông tin depth và path
+    /// </summary>
     private List<CommentFlattenDto> FlattenComments(List<Comment> comments)
     {
         var result = new List<CommentFlattenDto>();
@@ -128,6 +160,9 @@ public class CommentService : ICommentService
         return result;
     }
 
+    /// <summary>
+    /// Đệ quy flatten bình luận và các phản hồi
+    /// </summary>
     private void FlattenRecursive(Comment comment, Dictionary<Guid, Comment> allComments,
         List<CommentFlattenDto> result, int depth, string path)
     {

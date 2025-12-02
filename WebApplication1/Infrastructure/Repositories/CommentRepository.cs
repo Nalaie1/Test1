@@ -19,7 +19,10 @@ public class CommentRepository : ICommentRepository
         return await _context.Comments.FindAsync(commentId);
     }
 
-    // ===================== READ =====================
+    /// <summary>
+    /// Lấy tất cả bình luận của một bài viết, có thể bao gồm hoặc không bao gồm câu trả lời
+    /// Lọc những bình luận cấp cao (ParentCommentId == null)
+    /// </summary>
     public async Task<List<Comment>> GetAllCommentsForPost(Guid postId, bool includeReplies = true)
     {
         if (includeReplies)
@@ -36,6 +39,12 @@ public class CommentRepository : ICommentRepository
             .ToListAsync();
     }
 
+    
+    /// <summary>
+    /// Lấy tất cả bình luận của một bài viết bằng CTE recursive (nếu có hỗ trợ)
+    /// Hoặc fallback về recursive code nếu dùng InMemory database (cho tests)
+    /// Trả về flat list tất cả bình luận (Giống SQL CTE)
+    /// </summary>
     public async Task<List<Comment>> GetAllCommentsRecursive(Guid postId)
     {
         // Kiểm tra nếu đang dùng InMemory database (cho tests)
@@ -69,6 +78,10 @@ public class CommentRepository : ICommentRepository
         return await _context.Comments.FromSqlRaw(sql, postId).ToListAsync();
     }
 
+    /// <summary>
+    /// Lấy tất cả bình luận của một bài viết bằng cách load tất cả một lần và xây dựng cây bình luận
+    /// Trả về danh sách các bình luận cấp cao (có chứa replies bên trong)
+    /// </summary>
     public async Task<List<Comment>> GetAllCommentsIterative(Guid postId)
     {
         // Load tất cả comments của post một lần

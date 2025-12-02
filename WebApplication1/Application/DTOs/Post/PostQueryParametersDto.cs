@@ -1,0 +1,15 @@
+﻿namespace WebApplication1.Application.DTOs;
+
+/// <summary>
+/// Tham số truy vấn cho việc phân trang, sắp xếp và lọc bài viết.
+/// </summary>
+public class PostQueryParametersDto
+{
+    public int PageNumber { get; set; } = 1;
+    public int PageSize { get; set; } = 10;
+    public string? SortBy { get; set; }
+    public string? SortDirection { get; set; } = "asc"; // "asc" or "desc"
+    public string? SearchTerm { get; set; }
+    public Guid? UserId { get; set; }
+    public Guid? PostId { get; set; }
+}
