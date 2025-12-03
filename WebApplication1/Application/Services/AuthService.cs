@@ -1,69 +1,115 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Security.Cryptography;
+using System.Text;
 using WebApplication1.Application.DTOs;
 using WebApplication1.Application.Interfaces;
-using WebApplication1.Domain.Entities;
-using WebApplication1.Infrastructure.Data;
-using WebApplication1.Infrastructure.Repositories;
+using WebApplication1.Application.Interfaces.Jwt;
 
 namespace WebApplication1.Application.Services;
 
 public class AuthService : IAuthService
 {
-    private readonly IUserRepository _userRepository;
-    private readonly IJwtService _jwtService;
+    private readonly IUserRepository _users;
+    private readonly IJwtService _jwt;
+    private readonly IConfiguration _config;
 
-    public AuthService(IUserRepository userRepository, IJwtService jwtService)
+    private readonly string _issuer;
+    private readonly string _audience;
+    private readonly string _secret;
+    private readonly int _accessMinutes;
+    private readonly int _refreshDays;
+
+    public AuthService(IUserRepository users, IJwtService jwt, IConfiguration config)
     {
-        _userRepository = userRepository;
-        _jwtService = jwtService;
+        _users = users;
+        _jwt = jwt;
+        _config = config;
+
+        _issuer = _config["JwtSettings:Issuer"]!;
+        _audience = _config["JwtSettings:Audience"]!;
+        _secret = _config["JwtSettings:Secret"]!;
+
+        _accessMinutes = int.Parse(_config["JwtSettings:AccessTokenMinutes"]!);
+        _refreshDays = int.Parse(_config["JwtSettings:RefreshTokenDays"]!);
+    }
+    private bool VerifyPassword(string password, string storedHash)
+    {
+        using var sha = SHA256.Create();
+        var hashBytes = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
+        var hashString = Convert.ToHexString(hashBytes);
+        return hashString.Equals(storedHash, StringComparison.OrdinalIgnoreCase);
     }
 
-    /// <summary>
-    /// Đăng nhập người dùng và trả về token
-    /// </summary>
+    // ================= LOGIN =====================
     public async Task<LoginResponseDto?> LoginAsync(string username, string password)
     {
-        var user = await _userRepository.Users.FirstOrDefaultAsync(u => u.Username == username);
-        if (user == null) return null;
+        // Kiểm tra username và password
+        var user = await _users.GetByUsernameAsync(username);
+        if (user == null || !VerifyPassword(password, user.PasswordHash))
+            return null;
 
-        // Simple password check (replace with hash in prod)
-        if (user.PasswordHash != password) return null;
+        // nếu đúng, tạo access và refresh token
+        var access = _jwt.GenerateAccessToken(user);
+        var refresh = _jwt.GenerateRefreshToken();
 
-        var accessToken = _jwtService.GenerateAccessToken(user.Id, user.Username, user.Role);
-        var refreshToken = _jwtService.GenerateRefreshToken();
+        // cập nhật refresh token và thời gian hết hạn trong db
+        await _users.UpdateRefreshTokenAsync(
+            user.Id, 
+            refresh, 
+            DateTime.UtcNow.AddDays(_refreshDays)
+        );
 
-        user.RefreshToken = refreshToken;
-        user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
-        await _userRepository.SaveChangesAsync();
-
+        // trả về kết quả
         return new LoginResponseDto
         {
-            AccessToken = accessToken,
-            RefreshToken = refreshToken,
-            Role = user.Role
+            AccessToken = access,
+            RefreshToken = refresh,
+            ExpiresAt = DateTime.UtcNow.AddMinutes(_accessMinutes)
         };
     }
 
-    /// <summary>
-    /// Tải mới token sử dụng refresh token
-    /// </summary>
-    public async Task<LoginResponseDto?> RefreshTokenAsync(string refreshToken)
+    // ================= REFRESH TOKEN =====================
+    public async Task<LoginResponseDto?> RefreshAsync(string refreshToken)
     {
-        var user = await _userRepository.Sa;
-        if (user == null) return null;
+        // 1) Kiểm tra refresh token có tồn tại không
+        var user = await _users.GetByRefreshTokenAsync(refreshToken);
 
-        var accessToken = _jwtService.GenerateAccessToken(user.Id, user.Username, user.Role);
-        var newRefreshToken = _jwtService.GenerateRefreshToken();
+        // 2) Refresh token invalid hoặc user không tồn tại
+        if (user == null)
+            return null;
 
-        user.RefreshToken = newRefreshToken;
-        user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
-        await _userRepository.SaveChangesAsync();
+        // 3) Refresh token đã hết hạn → bắt login lại
+        if (user.RefreshTokenExpiryTime == null ||
+            user.RefreshTokenExpiryTime <= DateTime.UtcNow)
+            return null;
 
+        // 4) -> ĐÚNG LUỒNG: Refresh token hợp lệ => cấp token mới
+        var newAccessToken = _jwt.GenerateAccessToken(user);
+        var newRefreshToken = _jwt.GenerateRefreshToken();
+
+        // 5) Lưu refresh token mới vào DB
+        await _users.UpdateRefreshTokenAsync(
+            user.Id,
+            newRefreshToken,
+            DateTime.UtcNow.AddDays(_refreshDays)
+        );
+
+        // 6) Trả về DTO mới
         return new LoginResponseDto
         {
-            AccessToken = accessToken,
+            AccessToken = newAccessToken,
             RefreshToken = newRefreshToken,
-            Role = user.Role
+            ExpiresAt = DateTime.UtcNow.AddMinutes(_accessMinutes)
         };
+    }
+    // ================= LOGOUT =====================
+    public async Task LogoutAsync(Guid userId)
+    {
+        var user = await _users.GetByIdAsync(userId);
+        if (user == null) return;
+
+        user.RefreshToken = null;
+        user.RefreshTokenExpiryTime = null;
+
+        await _users.RevokeRefreshTokenAsync(userId);
     }
 }

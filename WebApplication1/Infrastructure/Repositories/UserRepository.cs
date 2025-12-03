@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using WebApplication1.Application.Interfaces;
 using WebApplication1.Domain.Entities;
 using WebApplication1.Infrastructure.Data;
@@ -13,34 +14,37 @@ public class UserRepository : IUserRepository
     {
         _context = context;
     }
+    
+    // Phương thức lấy người dùng theo username
+    public Task<User?> GetByUsernameAsync(string username) =>
+        _context.Users.FirstOrDefaultAsync(x => x.Username == username);
 
-    /// <summary>
-    /// Lấy người dùng theo tên đăng nhập
-    /// </summary>
-    public async Task<User?> GetByUsernameAsync(string username)
-    {
-        return await _context.Users
-            .FirstOrDefaultAsync(u => u.Username == username);
-    }
+    // Phương thức lấy người dùng theo id
+    public Task<User?> GetByIdAsync(Guid id) =>
+        _context.Users.FirstOrDefaultAsync(x => x.Id == id);
 
-    /// <summary>
-    /// Lấy người dùng theo ID
-    /// </summary>
-    public async Task<User?> GetByIdAsync(Guid id)
-    {
-        return await _context.Users
-            .FirstOrDefaultAsync(u => u.Id == id);
-    }
+    // Phương thức lấy người dùng theo refresh token
+    public Task<User?> GetByRefreshTokenAsync(string refreshToken) =>
+        _context.Users.FirstOrDefaultAsync(x => x.RefreshToken == refreshToken);
 
-    /// <summary>
-    /// Lưu trữ refresh token cho người dùng
-    /// </summary>
-    public async Task SaveRefreshTokenAsync(User user, string refreshToken, DateTime expiry)
+    // Phương thức cập nhật refresh token và thời gian hết hạn
+    public async Task UpdateRefreshTokenAsync(Guid userId, string refreshToken, DateTime expiry)
     {
+        var user = await _context.Users.FindAsync(userId);
+        if (user == null) return;
         user.RefreshToken = refreshToken;
         user.RefreshTokenExpiryTime = expiry;
-
-        _context.Users.Update(user);
         await _context.SaveChangesAsync();
+    }
+
+    // Phương thức thu hồi refresh token
+    public async Task<bool> RevokeRefreshTokenAsync(Guid userId)
+    {
+        var user = await _context.Users.FindAsync(userId);
+        if (user == null) return false;
+        user.RefreshToken = null;
+        user.RefreshTokenExpiryTime = null;
+        await _context.SaveChangesAsync();
+        return true;
     }
 }

@@ -28,9 +28,7 @@ public class CommentService : ICommentService
     /// </summary>
     public async Task<List<CommentDto>> GetCommentTreeAsync(Guid postId)
     {
-        /// <summary>
-        /// Cache key để lưu cây bình luận
-        /// </summary>
+        // Cache key để lưu cây bình luận
         var cacheKey = $"CommentTree_{postId.ToString()}";
         if (!_cache.TryGetValue(cacheKey, out List<CommentDto> cachedTree))
         {
@@ -51,9 +49,8 @@ public class CommentService : ICommentService
     public async Task<List<CommentFlattenDto>> GetCommentFlattenAsync(Guid postId)
     {
         var cacheKey = $"CommentFlatten_{postId.ToString()}";
-        ///<summary>
-        /// Cache danh sách bình luận phẳng
-        ///</summary>
+
+        // Cache danh sách bình luận phẳng
         if (!_cache.TryGetValue(cacheKey, out List<CommentFlattenDto> cachedFlatten))
         {
             var comments = await _repository.GetAllCommentsRecursive(postId);
@@ -73,6 +70,7 @@ public class CommentService : ICommentService
     /// </summary>
     public async Task<CommentDto> CreateCommentAsync(CommentCreateDto dto)
     {
+        // Tạo đối tượng bình luận mới
         var comment = new Comment
         {
             Content = dto.Content,
@@ -92,6 +90,7 @@ public class CommentService : ICommentService
     /// </summary>
     public async Task<CommentDto?> UpdateCommentAsync(Guid id, CommentUpdateDto dto)
     {
+        // Cập nhật nội dung bình luận
         var updated = await _repository.UpdateAsync(id, dto.Content);
         if (updated == null) return null;
 
@@ -105,6 +104,7 @@ public class CommentService : ICommentService
     /// </summary>
     public async Task<bool> DeleteCommentAsync(Guid id)
     {
+        // Xóa bình luận theo id
         var comment = await _repository.GetByIdAsync(id);
         if (comment == null) return false;
 
@@ -123,6 +123,7 @@ public class CommentService : ICommentService
     /// </summary>
     private List<CommentDto> MapToCommentTree(List<Comment> comments)
     {
+        
         var result = new List<CommentDto>();
 
         foreach (var comment in comments) result.Add(MapCommentRecursive(comment, 0));

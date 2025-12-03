@@ -1,12 +1,10 @@
 ﻿using WebApplication1.Application.DTOs;
 
-namespace WebApplication1.Application.Interfaces;
+namespace WebApplication1.Application.Interfaces.Jwt;
 
-/// <summary>
-/// Giao diện cho dịch vụ xác thực
-/// </summary>
 public interface IAuthService
 {
     Task<LoginResponseDto?> LoginAsync(string username, string password);
-    Task<LoginResponseDto?> RefreshTokenAsync(string refreshToken);
+    Task<LoginResponseDto?> RefreshAsync(string refreshToken);
+    Task LogoutAsync(Guid userId);
 }

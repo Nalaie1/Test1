@@ -7,12 +7,18 @@ namespace WebApplication1.Application.Interfaces;
 /// </summary>
 public interface IUserRepository
 {
-    // Lấy user theo username, dùng cho login
+    // Phương thức lấy người dùng theo username
     Task<User?> GetByUsernameAsync(string username);
-
-    // Lấy user theo Id, dùng cho middleware xác thực token
+    
+    // Phương thức lấy người dùng theo id
     Task<User?> GetByIdAsync(Guid id);
-
-    // Lưu refresh token
-    Task SaveRefreshTokenAsync(User user, string refreshToken, DateTime expiryTime);
+    
+    // Phương thức lấy người dùng theo refresh token
+    Task<User?> GetByRefreshTokenAsync(string refreshToken);
+    
+    // Phương thức cập nhật refresh token và thời gian hết hạn
+    Task UpdateRefreshTokenAsync(Guid userId, string refreshToken, DateTime expiry);
+    
+    // Phương thức thu hồi refresh token
+    Task<bool> RevokeRefreshTokenAsync(Guid userId);
 }

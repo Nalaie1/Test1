@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Application.DTOs;
 using WebApplication1.Application.Interfaces;
@@ -17,6 +18,7 @@ public class PostsController : ControllerBase
     
     // GET: api/posts
     [HttpGet]
+    [Authorize]
     public async Task<IActionResult> GetAll([FromQuery] PostQueryParametersDto queryParameters)
     {
         // Lấy danh sách bài viết có phân trang, lọc, sắp xếp
@@ -31,6 +33,7 @@ public class PostsController : ControllerBase
 
     // GET: api/posts/{id}
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<IActionResult> GetById(Guid id)
     {
         // Lấy bài viết theo id (service sẽ dùng cache nếu có)
@@ -44,6 +47,7 @@ public class PostsController : ControllerBase
 
     // POST: api/posts
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> Create([FromBody] PostCreateDto dto)
     {
         if (!ModelState.IsValid)
@@ -55,6 +59,7 @@ public class PostsController : ControllerBase
 
     // PUT: api/posts/{id}
     [HttpPut("{id}")]
+    [Authorize]
     public async Task<IActionResult> Update(Guid id, [FromBody] PostUpdateDto dto)
     {
         if (!ModelState.IsValid)
@@ -69,6 +74,7 @@ public class PostsController : ControllerBase
     
     // DELETE: api/posts/{id}
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> Delete(Guid id)
     {
         var deleted = await _service.DeletePostAsync(id);

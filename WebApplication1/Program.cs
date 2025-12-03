@@ -9,7 +9,10 @@ using WebApplication1.Infrastructure.Data;
 using WebApplication1.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using WebApplication1.Infrastructure.JWT;
+using WebApplication1.Application.Interfaces.Jwt;
+
+// using WebApplication1.API.Middleware;
+// using WebApplication1.Infrastructure.JWT;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,30 +41,30 @@ builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 
-/// Add Memory Cache
+// Add Memory Cache
 builder.Services.AddMemoryCache();
 
-/// Add JWT Authentication
-builder.Services.AddAuthentication(options =>
-    {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    })
-    .AddJwtBearer(options =>
-    {
-        // Cấu hình xác thực JWT
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = config["JwtSettings:Issuer"],
-            ValidAudience = config["JwtSettings:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(config["JwtSettings:Secret"]))
-        };
-    });
+// Add JWT Authentication
+ builder.Services.AddAuthentication(options =>
+     {
+         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+         options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+     })
+     .AddJwtBearer(options =>
+     {
+         // Cấu hình xác thực JWT
+         options.TokenValidationParameters = new TokenValidationParameters
+         {
+             ValidateIssuer = true,
+             ValidateAudience = true,
+             ValidateLifetime = true,
+             ValidateIssuerSigningKey = true,
+             ValidIssuer = config["JwtSettings:Issuer"],
+             ValidAudience = config["JwtSettings:Audience"],
+             IssuerSigningKey = new SymmetricSecurityKey(
+                 Encoding.UTF8.GetBytes(config["JwtSettings:Secret"]))
+         };
+     });
 
 // Add Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -194,8 +197,16 @@ if (app.Environment.IsDevelopment())
 app.UseCors();
 app.UseHttpsRedirection();
 
+// Middlewares for Authentication & Authorization
+app.UseAuthentication();
+app.UseAuthorization();
+
 // Map controllers
 app.MapControllers();
+
+// ===== Sample protected endpoints =====
+// app.MapGet("/admin/health", () => Results.Ok()).RequireAuthorization("Admin");
+// app.MapGet("/user/ping", () => Results.Ok()).RequireAuthorization("User");
 
 // ===== Demo endpoint for Comments =====
 app.MapGet("/demo-comments/{postId}", async (Guid postId, ICommentRepository commentRepo) =>

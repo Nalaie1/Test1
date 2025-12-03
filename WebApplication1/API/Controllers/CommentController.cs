@@ -1,5 +1,6 @@
 // Presentation/Controllers/CommentsController.cs
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Application.DTOs;
 using WebApplication1.Application.Services;
@@ -19,6 +20,7 @@ public class CommentsController : ControllerBase
 
     // GET: api/comments/{postId}/tree
     [HttpGet("{postId}/tree")]
+    [Authorize]
     public async Task<IActionResult> GetTree(Guid postId)
     {
         var comments = await _service.GetCommentTreeAsync(postId);
@@ -27,6 +29,7 @@ public class CommentsController : ControllerBase
 
     // GET: api/comments/flatten?postId={postId}
     [HttpGet("flatten")]
+    [Authorize]
     public async Task<IActionResult> GetFlatten([FromQuery] Guid postId)
     {
         var comments = await _service.GetCommentFlattenAsync(postId);
@@ -35,6 +38,7 @@ public class CommentsController : ControllerBase
 
     // POST: api/comments
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> Create([FromBody] CommentCreateDto dto)
     {
         var created = await _service.CreateCommentAsync(dto);
@@ -43,6 +47,7 @@ public class CommentsController : ControllerBase
 
     // PUT: api/comments/{id}
     [HttpPut("{id}")]
+    [Authorize]
     public async Task<IActionResult> Update(Guid id, [FromBody] CommentUpdateDto dto)
     {
         var updated = await _service.UpdateCommentAsync(id, dto);
@@ -52,6 +57,7 @@ public class CommentsController : ControllerBase
 
     // DELETE: api/comments/{id}
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> Delete(Guid id)
     {
         var success = await _service.DeleteCommentAsync(id);
