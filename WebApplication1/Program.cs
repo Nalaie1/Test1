@@ -8,8 +8,15 @@ using WebApplication1.Domain.Entities;
 using WebApplication1.Infrastructure.Data;
 using WebApplication1.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Serilog;
+using WebApplication1.API.Middleware;
+using WebApplication1.Application.Interfaces.IUploadService;
 using WebApplication1.Application.Interfaces.Jwt;
+
 
 // using WebApplication1.API.Middleware;
 // using WebApplication1.Infrastructure.JWT;
@@ -31,15 +38,47 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-
+builder.Services.AddScoped<IUploadRepository, UploadRepository>();
 
 // Register controllers
 builder.Services.AddControllers();
 
+// Register services
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IUploadService, UploadService>();
+
+// Add Api Versioning
+builder.Services.AddApiVersioning(options =>
+{
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+    options.ReportApiVersions = true;
+    
+    // Cho phép version theo URL: /api/v1/products
+    options.ApiVersionReader = new UrlSegmentApiVersionReader();
+});
+
+// Add Versioned API Explorer
+builder.Services.AddVersionedApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV";
+    options.AssumeDefaultVersionWhenUnspecified = true;
+});
+
+// Add Serilog
+Log.Logger = new LoggerConfiguration()
+    .Enrich.FromLogContext()
+    .Enrich.WithEnvironmentName()
+    .Enrich.WithProcessId()
+    .Enrich.WithThreadId()
+    .WriteTo.Console()
+    .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 // Add Memory Cache
 builder.Services.AddMemoryCache();
@@ -66,9 +105,37 @@ builder.Services.AddMemoryCache();
          };
      });
 
+// Configure Swagger to use JWT Authentication
+ builder.Services.AddSwaggerGen(c =>
+ {
+     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+     {
+         Name = "Authorization",
+         Type = SecuritySchemeType.Http,
+         Scheme = "bearer",
+         BearerFormat = "JWT",
+         In = ParameterLocation.Header,
+         Description = "Nhập token theo dạng: Bearer {token}"
+     });
+
+     c.AddSecurityRequirement(new OpenApiSecurityRequirement
+     {
+         {
+             new OpenApiSecurityScheme
+             {
+                 Reference = new OpenApiReference
+                 {
+                     Type = ReferenceType.SecurityScheme,
+                     Id = "Bearer"
+                 }
+             },
+             Array.Empty<string>()
+         }
+     });
+ });
+
 // Add Swagger
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 // Add CORS
 builder.Services.AddCors(options =>
@@ -78,6 +145,15 @@ builder.Services.AddCors(options =>
         policy.AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader();
+    });
+});
+
+// Add Authorization Policies
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("UserOrAdmin", policy =>
+    {
+        policy.RequireRole("User", "Admin");
     });
 });
 
@@ -193,20 +269,23 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Enable CORS
-app.UseCors();
+app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
+app.UseMiddleware<CorrelationIdMiddleware>();
+
+// Enable CORS
+app.UseCors("AllowAll");
 
 // Middlewares for Authentication & Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Middleware
+app.UseMiddleware<RoleMiddleware>();
+app.UseMiddleware<GlobalExceptionMiddleware>();
+
 // Map controllers
 app.MapControllers();
-
-// ===== Sample protected endpoints =====
-// app.MapGet("/admin/health", () => Results.Ok()).RequireAuthorization("Admin");
-// app.MapGet("/user/ping", () => Results.Ok()).RequireAuthorization("User");
 
 // ===== Demo endpoint for Comments =====
 app.MapGet("/demo-comments/{postId}", async (Guid postId, ICommentRepository commentRepo) =>

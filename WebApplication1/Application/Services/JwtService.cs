@@ -18,10 +18,10 @@ public class JwtService : IJwtService
     
     public string GenerateAccessToken(User user)
     {
-        var issuer = _config["Jwt:Issuer"];
-        var audience = _config["Jwt:Audience"];
-        var secret = _config["Jwt:Secret"];
-        var expiresMinutes = int.Parse(_config["Jwt:AccessMinutes"]);
+        var issuer = _config["JwtSettings:Issuer"];
+        var audience = _config["JwtSettings:Audience"];
+        var secret = _config["JwtSettings:Secret"];
+        var expiresMinutes = int.Parse(_config["JwtSettings:AccessTokenMinutes"]);
 
         var claims = new[]
         {

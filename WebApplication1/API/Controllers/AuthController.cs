@@ -31,9 +31,9 @@
         // POST: api/auth/refresh
         [HttpPost("refresh")]
         [AllowAnonymous]
-        public async Task<IActionResult> Refresh([FromBody] string refreshToken)
+        public async Task<IActionResult> Refresh([FromBody] RefreshRequestDto dto)
         {
-            var res = await _auth.RefreshAsync(refreshToken);
+            var res = await _auth.RefreshAsync(dto.RefreshToken);
             if (res == null) return Unauthorized();
             return Ok(res);
         }
@@ -44,11 +44,10 @@
         public async Task<IActionResult> Logout()
         {
             var idStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (Guid.TryParse(idStr, out var id))
-            {
-                await _auth.LogoutAsync(id);
-                return Ok();
-            }
-            return BadRequest();
+            if (!Guid.TryParse(idStr, out var id))
+                return BadRequest();
+
+            await _auth.LogoutAsync(id);
+            return Ok();
         }
     }

@@ -42,23 +42,18 @@ public class AuthService : IAuthService
     // ================= LOGIN =====================
     public async Task<LoginResponseDto?> LoginAsync(string username, string password)
     {
-        // Kiểm tra username và password
         var user = await _users.GetByUsernameAsync(username);
         if (user == null || !VerifyPassword(password, user.PasswordHash))
             return null;
-
-        // nếu đúng, tạo access và refresh token
+        
         var access = _jwt.GenerateAccessToken(user);
         var refresh = _jwt.GenerateRefreshToken();
-
-        // cập nhật refresh token và thời gian hết hạn trong db
+        
         await _users.UpdateRefreshTokenAsync(
             user.Id, 
             refresh, 
             DateTime.UtcNow.AddDays(_refreshDays)
         );
-
-        // trả về kết quả
         return new LoginResponseDto
         {
             AccessToken = access,
@@ -82,7 +77,7 @@ public class AuthService : IAuthService
             user.RefreshTokenExpiryTime <= DateTime.UtcNow)
             return null;
 
-        // 4) -> ĐÚNG LUỒNG: Refresh token hợp lệ => cấp token mới
+        // 4) Refresh token hợp lệ => cấp token mới
         var newAccessToken = _jwt.GenerateAccessToken(user);
         var newRefreshToken = _jwt.GenerateRefreshToken();
 
@@ -104,12 +99,6 @@ public class AuthService : IAuthService
     // ================= LOGOUT =====================
     public async Task LogoutAsync(Guid userId)
     {
-        var user = await _users.GetByIdAsync(userId);
-        if (user == null) return;
-
-        user.RefreshToken = null;
-        user.RefreshTokenExpiryTime = null;
-
         await _users.RevokeRefreshTokenAsync(userId);
     }
 }
