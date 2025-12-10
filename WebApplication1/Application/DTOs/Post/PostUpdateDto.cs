@@ -1,8 +1,7 @@
-﻿namespace WebApplication1.Application.DTOs
+﻿namespace WebApplication1.Application.DTOs;
+
+public class PostUpdateDto
 {
-    public class PostUpdateDto
-    {
-        public string? Title { get; set; }  
-        public string? Content { get; set; }
-    }
+    public string? Title { get; set; }
+    public string? Content { get; set; }
 }

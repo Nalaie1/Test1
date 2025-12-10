@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-
-namespace WebApplication1.Application.Interfaces.IUploadService;
+﻿namespace WebApplication1.Application.Interfaces.IUploadService;
 
 public interface IUploadService
 {

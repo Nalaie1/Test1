@@ -1,8 +1,7 @@
 ﻿namespace WebApplication1.Application.DTOs;
 
-
 /// <summary>
-/// Chuẩn hóa kết quả phân trang cho mọi list
+///     Chuẩn hóa kết quả phân trang cho mọi list
 /// </summary>
 public class PagedResultDto<T>
 {

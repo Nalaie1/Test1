@@ -1,8 +1,8 @@
-﻿using WebApplication1.Application.DTOs;
+﻿using AutoMapper;
+using Microsoft.Extensions.Caching.Memory;
+using WebApplication1.Application.DTOs;
 using WebApplication1.Application.Interfaces;
 using WebApplication1.Domain.Entities;
-using AutoMapper;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace WebApplication1.Application.Services;
 
@@ -18,13 +18,13 @@ public class PostService : IPostService
         _mapper = mapper;
         _cache = cache;
     }
-    
+
     /// <summary>
-    /// Lấy bài viết theo Id (có cache)
+    ///     Lấy bài viết theo Id (có cache)
     /// </summary>
     public async Task<PostDto?> GetByIdAsync(Guid id)
     {
-        string cacheKey = $"post_{id}";
+        var cacheKey = $"post_{id}";
 
         if (_cache.TryGetValue(cacheKey, out PostDto cached))
             return cached;
@@ -41,7 +41,7 @@ public class PostService : IPostService
     }
 
     /// <summary>
-    /// Lấy danh sách bài viết có phân trang, lọc, sắp xếp
+    ///     Lấy danh sách bài viết có phân trang, lọc, sắp xếp
     /// </summary>
     public async Task<PagedResultDto<PostDto>> GetPagedAsync(PostQueryParametersDto parameters)
     {
@@ -57,9 +57,9 @@ public class PostService : IPostService
             PageSize = pagedPosts.PageSize
         };
     }
-    
+
     /// <summary>
-    /// Tạo mới bài viết
+    ///     Tạo mới bài viết
     /// </summary>
     public async Task<PostDto> CreatePostAsync(PostCreateDto dto)
     {
@@ -70,7 +70,7 @@ public class PostService : IPostService
     }
 
     /// <summary>
-    /// Cập nhật bài viết
+    ///     Cập nhật bài viết
     /// </summary>
     public async Task<PostDto?> UpdatePostAsync(Guid id, PostUpdateDto dto)
     {
@@ -85,7 +85,7 @@ public class PostService : IPostService
     }
 
     /// <summary>
-    /// Xóa bài viết
+    ///     Xóa bài viết
     /// </summary>
     public async Task<bool> DeletePostAsync(Guid id)
     {

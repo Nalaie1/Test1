@@ -1,7 +1,7 @@
 ﻿namespace WebApplication1.Application.DTOs;
 
 /// <summary>
-/// Biểu diễn một comment ở dạng phẳng, có kèm depth và path để render/đếm thứ tự.
+///     Biểu diễn một comment ở dạng phẳng, có kèm depth và path để render/đếm thứ tự.
 /// </summary>
 public class CommentFlattenDto
 {

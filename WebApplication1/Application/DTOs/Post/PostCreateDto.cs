@@ -1,9 +1,8 @@
-﻿namespace WebApplication1.Application.DTOs
+﻿namespace WebApplication1.Application.DTOs;
+
+public class PostCreateDto
 {
-    public class PostCreateDto
-    {
-        public string Title { get; set; } = null!;
-        public string Content { get; set; } = null!;
-        public Guid UserId { get; set; }  // Ai tạo bài viết
-    }
+    public string Title { get; set; } = null!;
+    public string Content { get; set; } = null!;
+    public Guid UserId { get; set; } // Ai tạo bài viết
 }

@@ -11,7 +11,6 @@ namespace WebApplication1.Presentation.Controllers;
 [Authorize(Roles = "Admin")]
 public class UploadController : ControllerBase
 {
-    
     // POST: api/uploads/avatar
     [HttpPost("avatar")]
     [RequestSizeLimit(2 * 1024 * 1024)]
@@ -21,11 +20,11 @@ public class UploadController : ControllerBase
         [FromServices] IWebHostEnvironment env,
         [FromServices] IUploadService svc)
     {
-        var idStr = User.FindFirstValue(ClaimTypes.NameIdentifier) 
-                    ?? User.FindFirstValue(ClaimTypes.Name) 
-                    ?? User.FindFirstValue("sub") 
-                    ?? User.FindFirstValue("id");        
-        if (!Guid.TryParse(idStr, out var userId)) 
+        var idStr = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                    ?? User.FindFirstValue(ClaimTypes.Name)
+                    ?? User.FindFirstValue("sub")
+                    ?? User.FindFirstValue("id");
+        if (!Guid.TryParse(idStr, out var userId))
             return Unauthorized();
 
         var url = await svc.UploadUserAvatarAsync(userId, dto.File, env);

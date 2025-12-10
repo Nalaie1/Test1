@@ -11,11 +11,12 @@ namespace WebApplication1.Application.Services;
 public class JwtService : IJwtService
 {
     private readonly IConfiguration _config;
+
     public JwtService(IConfiguration config)
     {
         _config = config;
     }
-    
+
     public string GenerateAccessToken(User user)
     {
         var issuer = _config["JwtSettings:Issuer"];

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebApplication1.Application.Interfaces;
 using WebApplication1.Infrastructure.Data;
 
 namespace WebApplication1.Infrastructure.Repositories;

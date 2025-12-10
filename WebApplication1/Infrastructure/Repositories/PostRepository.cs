@@ -19,7 +19,7 @@ public class PostRepository : IPostRepository
     }
 
     /// <summary>
-    /// Lấy danh sách bài viết có phân trang, lọc, sắp xếp
+    ///     Lấy danh sách bài viết có phân trang, lọc, sắp xếp
     /// </summary>
     public async Task<PagedResultDto<Post>> GetPagedAsync(PostQueryParametersDto parameters)
     {
@@ -66,7 +66,7 @@ public class PostRepository : IPostRepository
     }
 
     /// <summary>
-    /// Lấy bài viết theo Id
+    ///     Lấy bài viết theo Id
     /// </summary>
     public async Task<Post?> GetByIdAsync(Guid PostId)
     {
@@ -77,7 +77,7 @@ public class PostRepository : IPostRepository
     }
 
     /// <summary>
-    /// Tạo mới bài viết
+    ///     Tạo mới bài viết
     /// </summary>
     public async Task<Post> CreateAsync(Post post)
     {
@@ -88,7 +88,7 @@ public class PostRepository : IPostRepository
     }
 
     /// <summary>
-    /// Cập nhật bài viết
+    ///     Cập nhật bài viết
     /// </summary>
     public async Task<Post?> UpdateAsync(Guid id, string NewContent)
     {
@@ -100,9 +100,9 @@ public class PostRepository : IPostRepository
         await _context.SaveChangesAsync();
         return post;
     }
-    
+
     /// <summary>
-    /// Xóa bài viết
+    ///     Xóa bài viết
     /// </summary>
     public async Task<bool> DeleteAsync(Guid id)
     {

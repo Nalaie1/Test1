@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using WebApplication1.Domain.Entities;
+﻿using WebApplication1.Domain.Entities;
 
 namespace WebApplication1.Application.Interfaces.Jwt;
 

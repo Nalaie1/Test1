@@ -1,7 +1,7 @@
 ﻿namespace WebApplication1.Application.DTOs;
 
 /// <summary>
-/// Tham số truy vấn cho việc phân trang, sắp xếp và lọc bài viết.
+///     Tham số truy vấn cho việc phân trang, sắp xếp và lọc bài viết.
 /// </summary>
 public class PostQueryParametersDto
 {

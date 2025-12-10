@@ -1,7 +1,7 @@
 ﻿namespace WebApplication1.Application.DTOs;
 
 /// <summary>
-/// Đại diện dữ liệu cho 1 bài đăng, kèm thông tin người tạo và số lượng bình luận
+///     Đại diện dữ liệu cho 1 bài đăng, kèm thông tin người tạo và số lượng bình luận
 /// </summary>
 public class PostDto
 {

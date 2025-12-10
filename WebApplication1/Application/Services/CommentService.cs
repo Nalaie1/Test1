@@ -7,9 +7,8 @@ using WebApplication1.Domain.Entities;
 namespace WebApplication1.Application.Services;
 
 /// <summary>
-/// Xử lý logic liên quan đến bình luận
+///     Xử lý logic liên quan đến bình luận
 /// </summary>
-
 public class CommentService : ICommentService
 {
     private readonly IMemoryCache _cache;
@@ -24,7 +23,7 @@ public class CommentService : ICommentService
     }
 
     /// <summary>
-    /// Lấy cây bình luận cho một bài viết
+    ///     Lấy cây bình luận cho một bài viết
     /// </summary>
     public async Task<List<CommentDto>> GetCommentTreeAsync(Guid postId)
     {
@@ -44,7 +43,7 @@ public class CommentService : ICommentService
     }
 
     /// <summary>
-    /// Lấy danh sách bình luận phẳng cho một bài viết
+    ///     Lấy danh sách bình luận phẳng cho một bài viết
     /// </summary>
     public async Task<List<CommentFlattenDto>> GetCommentFlattenAsync(Guid postId)
     {
@@ -66,7 +65,7 @@ public class CommentService : ICommentService
     }
 
     /// <summary>
-    /// Tạo mới bình luận
+    ///     Tạo mới bình luận
     /// </summary>
     public async Task<CommentDto> CreateCommentAsync(CommentCreateDto dto)
     {
@@ -86,7 +85,7 @@ public class CommentService : ICommentService
     }
 
     /// <summary>
-    /// Cập nhật bình luận
+    ///     Cập nhật bình luận
     /// </summary>
     public async Task<CommentDto?> UpdateCommentAsync(Guid id, CommentUpdateDto dto)
     {
@@ -100,7 +99,7 @@ public class CommentService : ICommentService
     }
 
     /// <summary>
-    /// Xóa bình luận
+    ///     Xóa bình luận
     /// </summary>
     public async Task<bool> DeleteCommentAsync(Guid id)
     {
@@ -119,11 +118,10 @@ public class CommentService : ICommentService
     }
 
     /// <summary>
-    /// Map danh sách bình luận thành cây bình luận
+    ///     Map danh sách bình luận thành cây bình luận
     /// </summary>
     private List<CommentDto> MapToCommentTree(List<Comment> comments)
     {
-        
         var result = new List<CommentDto>();
 
         foreach (var comment in comments) result.Add(MapCommentRecursive(comment, 0));
@@ -132,7 +130,7 @@ public class CommentService : ICommentService
     }
 
     /// <summary>
-    /// Map bình luận và các phản hồi đệ quy
+    ///     Map bình luận và các phản hồi đệ quy
     /// </summary>
     private CommentDto MapCommentRecursive(Comment comment, int depth)
     {
@@ -148,7 +146,7 @@ public class CommentService : ICommentService
     }
 
     /// <summary>
-    /// Chuyển danh sách bình luận thành danh sách phẳng có thông tin depth và path
+    ///     Chuyển danh sách bình luận thành danh sách phẳng có thông tin depth và path
     /// </summary>
     private List<CommentFlattenDto> FlattenComments(List<Comment> comments)
     {
@@ -162,7 +160,7 @@ public class CommentService : ICommentService
     }
 
     /// <summary>
-    /// Đệ quy flatten bình luận và các phản hồi
+    ///     Đệ quy flatten bình luận và các phản hồi
     /// </summary>
     private void FlattenRecursive(Comment comment, Dictionary<Guid, Comment> allComments,
         List<CommentFlattenDto> result, int depth, string path)

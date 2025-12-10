@@ -4,7 +4,7 @@ using WebApplication1.Domain.Entities;
 namespace WebApplication1.Application.Interfaces;
 
 /// <summary>
-/// Định nghĩa các phương thức thao tác dữ liệu bài viết
+///     Định nghĩa các phương thức thao tác dữ liệu bài viết
 /// </summary>
 public interface IPostRepository
 {

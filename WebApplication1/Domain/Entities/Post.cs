@@ -9,6 +9,6 @@ public class Post
     public Guid UserId { get; set; }
     public User User { get; set; } = null!;
     public string? ImageUrl { get; set; }
-    
+
     public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 }

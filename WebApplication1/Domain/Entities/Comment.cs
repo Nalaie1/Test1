@@ -10,7 +10,7 @@ public class Comment
 
     public Guid PostId { get; set; }
     public Post Post { get; set; } = null!;
-    
+
     public string? AttachmentUrl { get; set; }
 
     // Recursive

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 using WebApplication1.Application.Interfaces;
 using WebApplication1.Domain.Entities;
 using WebApplication1.Infrastructure.Data;
@@ -14,18 +13,24 @@ public class UserRepository : IUserRepository
     {
         _context = context;
     }
-    
+
     // Phương thức lấy người dùng theo username
-    public Task<User?> GetByUsernameAsync(string username) =>
-        _context.Users.FirstOrDefaultAsync(x => x.Username == username);
+    public Task<User?> GetByUsernameAsync(string username)
+    {
+        return _context.Users.FirstOrDefaultAsync(x => x.Username == username);
+    }
 
     // Phương thức lấy người dùng theo id
-    public Task<User?> GetByIdAsync(Guid id) =>
-        _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+    public Task<User?> GetByIdAsync(Guid id)
+    {
+        return _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+    }
 
     // Phương thức lấy người dùng theo refresh token
-    public Task<User?> GetByRefreshTokenAsync(string refreshToken) =>
-        _context.Users.FirstOrDefaultAsync(x => x.RefreshToken == refreshToken);
+    public Task<User?> GetByRefreshTokenAsync(string refreshToken)
+    {
+        return _context.Users.FirstOrDefaultAsync(x => x.RefreshToken == refreshToken);
+    }
 
     // Phương thức cập nhật refresh token và thời gian hết hạn
     public async Task UpdateRefreshTokenAsync(Guid userId, string refreshToken, DateTime expiry)

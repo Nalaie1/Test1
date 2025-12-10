@@ -1,7 +1,7 @@
 namespace WebApplication1.Application.DTOs;
 
 /// <summary>
-/// Đại diện một comment trong dạng cây (nested), hỗ trợ hiển thị replies nhiều cấp.
+///     Đại diện một comment trong dạng cây (nested), hỗ trợ hiển thị replies nhiều cấp.
 /// </summary>
 public class CommentDto
 {

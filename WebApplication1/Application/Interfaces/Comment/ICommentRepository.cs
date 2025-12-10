@@ -3,7 +3,7 @@ using WebApplication1.Domain.Entities;
 namespace WebApplication1.Application.Interfaces;
 
 /// <summary>
-/// Định nghĩa các phương thức thao tác dữ liệu bình luận
+///     Định nghĩa các phương thức thao tác dữ liệu bình luận
 /// </summary>
 public interface ICommentRepository
 {

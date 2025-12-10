@@ -191,3 +191,4 @@ C:\Users\Admin\RiderProjects\MiniProject\WebApplication1\bin\Debug\net8.0\Serilo
 C:\Users\Admin\RiderProjects\MiniProject\WebApplication1\bin\Debug\net8.0\Serilog.Sinks.Console.dll
 C:\Users\Admin\RiderProjects\MiniProject\WebApplication1\bin\Debug\net8.0\Serilog.Sinks.Debug.dll
 C:\Users\Admin\RiderProjects\MiniProject\WebApplication1\bin\Debug\net8.0\Serilog.Sinks.File.dll
+C:\Users\Admin\RiderProjects\MiniProject\WebApplication1\bin\Debug\net8.0\WebApplication1.staticwebassets.runtime.json

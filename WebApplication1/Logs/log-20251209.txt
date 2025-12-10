@@ -1122,3 +1122,149 @@ WHERE [Id] = @p1;
 2025-12-09 14:52:54.015 +07:00 [INF] Executed endpoint 'WebApplication1.Presentation.Controllers.UploadController.UploadAvatar (WebApplication1)'
 2025-12-09 14:52:54.024 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost:5165/api/uploads/avatar - 200 null application/json; charset=utf-8 560.5165ms
 2025-12-09 14:53:01.511 +07:00 [INF] Application is shutting down...
+2025-12-09 15:31:37.652 +07:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-12-09 15:31:41.644 +07:00 [INF] Now listening on: http://localhost:5165
+2025-12-09 15:31:41.650 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-09 15:31:41.652 +07:00 [INF] Hosting environment: Development
+2025-12-09 15:31:41.654 +07:00 [INF] Content root path: C:\Users\Admin\RiderProjects\MiniProject\WebApplication1
+2025-12-09 15:31:41.876 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/swagger/index.html - null null
+2025-12-09 15:31:42.752 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/swagger/index.html - 200 null text/html;charset=utf-8 877.8965ms
+2025-12-09 15:31:43.087 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/swagger/v1/swagger.json - null null
+2025-12-09 15:31:43.310 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 223.7835ms
+2025-12-09 15:31:47.270 +07:00 [WRN] As of ""2025-12-09T08:31:46.2596327+00:00"", the heartbeat has been running for ""00:00:01.0070321"" which is longer than ""00:00:01"". This could be caused by thread pool starvation.
+2025-12-09 15:57:37.479 +07:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-12-09 15:57:37.788 +07:00 [INF] Now listening on: http://localhost:5165
+2025-12-09 15:57:37.802 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-09 15:57:37.808 +07:00 [INF] Hosting environment: Development
+2025-12-09 15:57:37.816 +07:00 [INF] Content root path: C:\Users\Admin\RiderProjects\MiniProject\WebApplication1
+2025-12-09 15:57:40.253 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/swagger/index.html - null null
+2025-12-09 15:57:40.660 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/swagger/index.html - 200 null text/html;charset=utf-8 412.4113ms
+2025-12-09 15:57:41.162 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/swagger/v1/swagger.json - null null
+2025-12-09 15:57:41.619 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 460.5755ms
+2025-12-09 16:22:01.272 +07:00 [INF] Application is shutting down...
+2025-12-09 16:25:52.896 +07:00 [INF] Starting Web API...
+2025-12-09 16:25:55.506 +07:00 [FTL] Application terminated unexpectedly
+System.AggregateException: Some services are not able to be constructed (Error while validating the service descriptor 'ServiceType: WebApplication1.Application.Services.ICommentService Lifetime: Scoped ImplementationType: WebApplication1.Application.Services.CommentService': Unable to resolve service for type 'Microsoft.Extensions.Caching.Memory.IMemoryCache' while attempting to activate 'WebApplication1.Application.Services.CommentService'.) (Error while validating the service descriptor 'ServiceType: WebApplication1.Application.Interfaces.IPostService Lifetime: Scoped ImplementationType: WebApplication1.Application.Services.PostService': Unable to resolve service for type 'Microsoft.Extensions.Caching.Memory.IMemoryCache' while attempting to activate 'WebApplication1.Application.Services.PostService'.)
+ ---> System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: WebApplication1.Application.Services.ICommentService Lifetime: Scoped ImplementationType: WebApplication1.Application.Services.CommentService': Unable to resolve service for type 'Microsoft.Extensions.Caching.Memory.IMemoryCache' while attempting to activate 'WebApplication1.Application.Services.CommentService'.
+ ---> System.InvalidOperationException: Unable to resolve service for type 'Microsoft.Extensions.Caching.Memory.IMemoryCache' while attempting to activate 'WebApplication1.Application.Services.CommentService'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(IServiceCollection services, ServiceProviderOptions options)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in C:\Users\Admin\RiderProjects\MiniProject\WebApplication1\Program.cs:line 149
+ ---> (Inner Exception #1) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: WebApplication1.Application.Interfaces.IPostService Lifetime: Scoped ImplementationType: WebApplication1.Application.Services.PostService': Unable to resolve service for type 'Microsoft.Extensions.Caching.Memory.IMemoryCache' while attempting to activate 'WebApplication1.Application.Services.PostService'.
+ ---> System.InvalidOperationException: Unable to resolve service for type 'Microsoft.Extensions.Caching.Memory.IMemoryCache' while attempting to activate 'WebApplication1.Application.Services.PostService'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+2025-12-09 16:26:37.184 +07:00 [INF] Starting Web API...
+2025-12-09 16:26:37.936 +07:00 [FTL] Application terminated unexpectedly
+System.AggregateException: Some services are not able to be constructed (Error while validating the service descriptor 'ServiceType: WebApplication1.Application.Services.ICommentService Lifetime: Scoped ImplementationType: WebApplication1.Application.Services.CommentService': Unable to resolve service for type 'Microsoft.Extensions.Caching.Memory.IMemoryCache' while attempting to activate 'WebApplication1.Application.Services.CommentService'.) (Error while validating the service descriptor 'ServiceType: WebApplication1.Application.Interfaces.IPostService Lifetime: Scoped ImplementationType: WebApplication1.Application.Services.PostService': Unable to resolve service for type 'Microsoft.Extensions.Caching.Memory.IMemoryCache' while attempting to activate 'WebApplication1.Application.Services.PostService'.)
+ ---> System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: WebApplication1.Application.Services.ICommentService Lifetime: Scoped ImplementationType: WebApplication1.Application.Services.CommentService': Unable to resolve service for type 'Microsoft.Extensions.Caching.Memory.IMemoryCache' while attempting to activate 'WebApplication1.Application.Services.CommentService'.
+ ---> System.InvalidOperationException: Unable to resolve service for type 'Microsoft.Extensions.Caching.Memory.IMemoryCache' while attempting to activate 'WebApplication1.Application.Services.CommentService'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(IServiceCollection services, ServiceProviderOptions options)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in C:\Users\Admin\RiderProjects\MiniProject\WebApplication1\Program.cs:line 360
+ ---> (Inner Exception #1) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: WebApplication1.Application.Interfaces.IPostService Lifetime: Scoped ImplementationType: WebApplication1.Application.Services.PostService': Unable to resolve service for type 'Microsoft.Extensions.Caching.Memory.IMemoryCache' while attempting to activate 'WebApplication1.Application.Services.PostService'.
+ ---> System.InvalidOperationException: Unable to resolve service for type 'Microsoft.Extensions.Caching.Memory.IMemoryCache' while attempting to activate 'WebApplication1.Application.Services.PostService'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+2025-12-09 16:27:39.873 +07:00 [INF] Starting Web API...
+2025-12-09 16:27:40.565 +07:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-12-09 16:27:40.781 +07:00 [INF] Now listening on: http://localhost:5165
+2025-12-09 16:27:40.787 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-09 16:27:40.791 +07:00 [INF] Hosting environment: Development
+2025-12-09 16:27:40.793 +07:00 [INF] Content root path: C:\Users\Admin\RiderProjects\MiniProject\WebApplication1
+2025-12-09 16:27:42.749 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/swagger/index.html - null null
+2025-12-09 16:27:43.063 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/swagger/index.html - 200 null text/html;charset=utf-8 315.616ms
+2025-12-09 16:27:43.561 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/swagger/v1/swagger.json - null null
+2025-12-09 16:27:43.887 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 326.5553ms
+2025-12-09 16:27:57.202 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost:5165/api/auth/login - application/json 49
+2025-12-09 16:27:57.226 +07:00 [WRN] Failed to determine the https port for redirect.
+2025-12-09 16:27:57.238 +07:00 [INF] CORS policy execution successful.
+2025-12-09 16:27:57.317 +07:00 [INF] Executing endpoint 'WebApplication1.Presentation.Controllers.AuthController.Login (WebApplication1)'
+2025-12-09 16:27:57.370 +07:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(WebApplication1.Application.DTOs.LoginRequestDto) on controller WebApplication1.Presentation.Controllers.AuthController (WebApplication1).
+2025-12-09 16:27:57.803 +07:00 [INF] Executing action method WebApplication1.Presentation.Controllers.AuthController.Login (WebApplication1) - Validation state: "Valid"
+2025-12-09 16:28:00.222 +07:00 [INF] Executed DbCommand (317ms) [Parameters=[@__username_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='600']
+SELECT TOP(1) [u].[Id], [u].[AvatarUrl], [u].[Name], [u].[PasswordHash], [u].[RefreshToken], [u].[RefreshTokenExpiryTime], [u].[Role], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__username_0
+2025-12-09 16:28:00.813 +07:00 [INF] Executed DbCommand (30ms) [Parameters=[@p2='?' (DbType = Guid), @p0='?' (Size = 4000), @p1='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='600']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Users] SET [RefreshToken] = @p0, [RefreshTokenExpiryTime] = @p1
+OUTPUT 1
+WHERE [Id] = @p2;
+2025-12-09 16:28:00.864 +07:00 [INF] Executed action method WebApplication1.Presentation.Controllers.AuthController.Login (WebApplication1), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 3046.8672ms.
+2025-12-09 16:28:00.887 +07:00 [INF] Executing OkObjectResult, writing value of type 'WebApplication1.Application.DTOs.LoginResponseDto'.
+2025-12-09 16:28:00.948 +07:00 [INF] Executed action WebApplication1.Presentation.Controllers.AuthController.Login (WebApplication1) in 3567.693ms
+2025-12-09 16:28:00.952 +07:00 [INF] Executed endpoint 'WebApplication1.Presentation.Controllers.AuthController.Login (WebApplication1)'
+2025-12-09 16:28:00.969 +07:00 [INF] HTTP POST /api/auth/login responded 200 in 3743.3680 ms
+2025-12-09 16:28:00.996 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost:5165/api/auth/login - 200 null application/json; charset=utf-8 3793.6645ms
+2025-12-09 16:29:09.255 +07:00 [INF] Request starting HTTP/1.1 POST http://localhost:5165/api/uploads/avatar - multipart/form-data; boundary=----WebKitFormBoundaryPavIqigv1m2H0RAs 155683816
+2025-12-09 16:29:09.273 +07:00 [INF] CORS policy execution successful.
+2025-12-09 16:29:09.375 +07:00 [INF] Executing endpoint 'WebApplication1.Presentation.Controllers.UploadController.UploadAvatar (WebApplication1)'
+2025-12-09 16:29:09.395 +07:00 [INF] Route matched with {action = "UploadAvatar", controller = "Upload"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UploadAvatar(WebApplication1.Application.DTOs.Upload.UploadAvatarDto, Microsoft.AspNetCore.Hosting.IWebHostEnvironment, WebApplication1.Application.Interfaces.IUploadService.IUploadService) on controller WebApplication1.Presentation.Controllers.UploadController (WebApplication1).
+2025-12-09 16:29:09.511 +07:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2025-12-09 16:29:09.644 +07:00 [INF] Executed action WebApplication1.Presentation.Controllers.UploadController.UploadAvatar (WebApplication1) in 237.5466ms
+2025-12-09 16:29:09.649 +07:00 [INF] Executed endpoint 'WebApplication1.Presentation.Controllers.UploadController.UploadAvatar (WebApplication1)'
+2025-12-09 16:29:09.655 +07:00 [INF] HTTP POST /api/uploads/avatar responded 400 in 383.1502 ms
+2025-12-09 16:29:09.663 +07:00 [INF] Request finished HTTP/1.1 POST http://localhost:5165/api/uploads/avatar - 400 null application/problem+json; charset=utf-8 407.7103ms
+2025-12-09 16:29:41.721 +07:00 [INF] Application is shutting down...
+2025-12-09 16:29:48.618 +07:00 [INF] Starting API
+2025-12-09 16:29:49.505 +07:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-12-09 16:29:49.714 +07:00 [INF] Now listening on: http://localhost:5165
+2025-12-09 16:29:49.719 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-09 16:29:49.721 +07:00 [INF] Hosting environment: Development
+2025-12-09 16:29:49.723 +07:00 [INF] Content root path: C:\Users\Admin\RiderProjects\MiniProject\WebApplication1
+2025-12-09 16:29:50.380 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/swagger/index.html - null null
+2025-12-09 16:29:51.812 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/swagger/index.html - 200 null text/html;charset=utf-8 1445.7913ms
+2025-12-09 16:29:52.091 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/swagger/v1/swagger.json - null null
+2025-12-09 16:29:52.374 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 283.6877ms
+2025-12-09 16:29:55.402 +07:00 [INF] Application is shutting down...
+2025-12-09 16:29:55.440 +07:00 [FTL] API terminated unexpectedly!
+System.ObjectDisposedException: Cannot access a disposed object.
+Object name: 'IServiceProvider'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ThrowHelper.ThrowObjectDisposedException()
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetService[T](IServiceProvider provider)
+   at Serilog.SerilogApplicationBuilderExtensions.UseSerilogRequestLogging(IApplicationBuilder app, Action`1 configureOptions)
+   at Program.<Main>$(String[] args) in C:\Users\Admin\RiderProjects\MiniProject\WebApplication1\Program.cs:line 199

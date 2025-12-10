@@ -1,7 +1,7 @@
 ﻿namespace WebApplication1.Application.DTOs;
 
 /// <summary>
-/// Dữ liệu đầu vào để tạo bình luận mới
+///     Dữ liệu đầu vào để tạo bình luận mới
 /// </summary>
 public class CommentCreateDto
 {

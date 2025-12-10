@@ -1,6 +1,4 @@
-﻿using WebApplication1.Domain.Entities;
-
-namespace WebApplication1.Infrastructure.Repositories;
+﻿namespace WebApplication1.Infrastructure.Repositories;
 
 public interface IUploadRepository
 {

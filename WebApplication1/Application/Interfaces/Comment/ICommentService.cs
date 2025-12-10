@@ -3,7 +3,7 @@ using WebApplication1.Application.DTOs;
 namespace WebApplication1.Application.Services;
 
 /// <summary>
-/// Định nghĩa các phương thức thao tác với bình luận
+///     Định nghĩa các phương thức thao tác với bình luận
 /// </summary>
 public interface ICommentService
 {

@@ -8,15 +8,15 @@ namespace WebApplication1.Application.Services;
 
 public class AuthService : IAuthService
 {
-    private readonly IUserRepository _users;
-    private readonly IJwtService _jwt;
+    private readonly int _accessMinutes;
+    private readonly string _audience;
     private readonly IConfiguration _config;
 
     private readonly string _issuer;
-    private readonly string _audience;
-    private readonly string _secret;
-    private readonly int _accessMinutes;
+    private readonly IJwtService _jwt;
     private readonly int _refreshDays;
+    private readonly string _secret;
+    private readonly IUserRepository _users;
 
     public AuthService(IUserRepository users, IJwtService jwt, IConfiguration config)
     {
@@ -31,13 +31,6 @@ public class AuthService : IAuthService
         _accessMinutes = int.Parse(_config["JwtSettings:AccessTokenMinutes"]!);
         _refreshDays = int.Parse(_config["JwtSettings:RefreshTokenDays"]!);
     }
-    private bool VerifyPassword(string password, string storedHash)
-    {
-        using var sha = SHA256.Create();
-        var hashBytes = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
-        var hashString = Convert.ToHexString(hashBytes);
-        return hashString.Equals(storedHash, StringComparison.OrdinalIgnoreCase);
-    }
 
     // ================= LOGIN =====================
     public async Task<LoginResponseDto?> LoginAsync(string username, string password)
@@ -45,13 +38,13 @@ public class AuthService : IAuthService
         var user = await _users.GetByUsernameAsync(username);
         if (user == null || !VerifyPassword(password, user.PasswordHash))
             return null;
-        
+
         var access = _jwt.GenerateAccessToken(user);
         var refresh = _jwt.GenerateRefreshToken();
-        
+
         await _users.UpdateRefreshTokenAsync(
-            user.Id, 
-            refresh, 
+            user.Id,
+            refresh,
             DateTime.UtcNow.AddDays(_refreshDays)
         );
         return new LoginResponseDto
@@ -96,9 +89,18 @@ public class AuthService : IAuthService
             ExpiresAt = DateTime.UtcNow.AddMinutes(_accessMinutes)
         };
     }
+
     // ================= LOGOUT =====================
     public async Task LogoutAsync(Guid userId)
     {
         await _users.RevokeRefreshTokenAsync(userId);
+    }
+
+    private bool VerifyPassword(string password, string storedHash)
+    {
+        using var sha = SHA256.Create();
+        var hashBytes = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
+        var hashString = Convert.ToHexString(hashBytes);
+        return hashString.Equals(storedHash, StringComparison.OrdinalIgnoreCase);
     }
 }

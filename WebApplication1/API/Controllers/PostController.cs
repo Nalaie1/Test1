@@ -15,7 +15,7 @@ public class PostsController : ControllerBase
     {
         _service = service;
     }
-    
+
     // GET: api/posts
     [HttpGet]
     [Authorize]
@@ -71,7 +71,7 @@ public class PostsController : ControllerBase
 
         return Ok(updated);
     }
-    
+
     // DELETE: api/posts/{id}
     [HttpDelete("{id}")]
     [Authorize]
