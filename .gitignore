@@ -1,0 +1,8 @@
+#Rider / .NET
+*.user
+*.suo
+*.userosscache
+.sln.docstates
+/bin/
+/obj/
+/.DotSettings.user
