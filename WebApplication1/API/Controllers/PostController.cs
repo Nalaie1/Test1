@@ -6,7 +6,8 @@ using WebApplication1.Application.Interfaces;
 namespace WebApplication1.Presentation.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 public class PostsController : ControllerBase
 {
     private readonly IPostService _service;

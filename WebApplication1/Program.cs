@@ -1,6 +1,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -12,11 +13,14 @@ using WebApplication1.Application.Interfaces.IUploadService;
 using WebApplication1.Application.Interfaces.Jwt;
 using WebApplication1.Application.Mappings;
 using WebApplication1.Application.Services;
+using WebApplication1.Configurations;
 using WebApplication1.Infrastructure.Data;
 using WebApplication1.Infrastructure.Repositories;
 
 Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
+    .Enrich.WithCorrelationId()
+    .Enrich.WithCorrelationIdHeader()
     .Enrich.WithEnvironmentName()
     .Enrich.WithProcessId()
     .Enrich.WithThreadId()
@@ -41,6 +45,12 @@ try
             "Server=nalaie\\MSSQLSERVER2022;Database=ConsoleApp2Db;Trusted_Connection=True;TrustServerCertificate=True;",
             sqlOptions => sqlOptions.CommandTimeout(600)));
 
+    // A
+    builder.Services.AddStackExchangeRedisCache(options =>
+    {
+        options.Configuration = builder.Configuration["Redis:Host"];
+    });
+    
     // Register AutoMapper with the MappingProfile
     builder.Services.AddAutoMapper(typeof(MappingProfile));
 
@@ -135,6 +145,9 @@ try
     // Add Swagger
     builder.Services.AddEndpointsApiExplorer();
 
+    // Configure Swagger Options
+    builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
+    
     // Add CORS
     builder.Services.AddCors(options =>
     {
@@ -157,8 +170,16 @@ try
     // ===== Swagger + Middlewares =====
     if (app.Environment.IsDevelopment())
     {
+        var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+
         app.UseSwagger();
-        app.UseSwaggerUI();
+        app.UseSwaggerUI(options =>
+        {
+            foreach (var desc in provider.ApiVersionDescriptions)
+            {
+                options.SwaggerEndpoint($"/swagger/{desc.GroupName}/swagger.json", desc.GroupName.ToUpperInvariant());
+            }
+        });
     }
 
     app.UseSerilogRequestLogging();
@@ -179,19 +200,8 @@ try
     // Map controllers
     app.MapControllers();
 
-    // ===== Demo endpoint for Comments =====
-    app.MapGet("/demo-comments/{postId}", async (Guid postId, ICommentRepository commentRepo) =>
-        {
-            var comments = await commentRepo.GetAllCommentsForPost(postId);
-            return Results.Ok(comments);
-        })
-        .WithName("GetComments")
-        .WithOpenApi();
-
     app.Run();
-    app.UseSerilogRequestLogging();
 
-    app.Run();
 }
 catch (Exception ex)
 {

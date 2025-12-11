@@ -17,6 +17,7 @@ public class JwtService : IJwtService
         _config = config;
     }
 
+    // ================= GENERATE TOKENS =====================
     public string GenerateAccessToken(User user)
     {
         var issuer = _config["JwtSettings:Issuer"];
@@ -45,6 +46,7 @@ public class JwtService : IJwtService
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
+    // ================= GENERATE REFRESH TOKENS =====================
     public string GenerateRefreshToken()
     {
         var bytes = new byte[64];

@@ -7,7 +7,8 @@ using WebApplication1.Application.Interfaces.Jwt;
 namespace WebApplication1.Presentation.Controllers;
 
 [ApiController]
-[Route("api/auth")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _auth;

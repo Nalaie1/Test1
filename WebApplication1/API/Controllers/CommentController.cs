@@ -8,7 +8,8 @@ using WebApplication1.Application.Services;
 namespace WebApplication1.Presentation.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 public class CommentsController : ControllerBase
 {
     private readonly ICommentService _service;

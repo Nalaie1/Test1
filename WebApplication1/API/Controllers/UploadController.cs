@@ -7,7 +7,8 @@ using WebApplication1.Application.Interfaces.IUploadService;
 namespace WebApplication1.Presentation.Controllers;
 
 [ApiController]
-[Route("api/uploads")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 [Authorize(Roles = "Admin")]
 public class UploadController : ControllerBase
 {

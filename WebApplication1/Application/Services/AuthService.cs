@@ -58,30 +58,30 @@ public class AuthService : IAuthService
     // ================= REFRESH TOKEN =====================
     public async Task<LoginResponseDto?> RefreshAsync(string refreshToken)
     {
-        // 1) Kiểm tra refresh token có tồn tại không
+        // Kiểm tra refresh token có tồn tại không
         var user = await _users.GetByRefreshTokenAsync(refreshToken);
 
-        // 2) Refresh token invalid hoặc user không tồn tại
+        // Refresh token invalid hoặc user không tồn tại
         if (user == null)
             return null;
 
-        // 3) Refresh token đã hết hạn → bắt login lại
+        // Refresh token đã hết hạn → bắt login lại
         if (user.RefreshTokenExpiryTime == null ||
             user.RefreshTokenExpiryTime <= DateTime.UtcNow)
             return null;
 
-        // 4) Refresh token hợp lệ => cấp token mới
+        // Refresh token hợp lệ => cấp token mới
         var newAccessToken = _jwt.GenerateAccessToken(user);
         var newRefreshToken = _jwt.GenerateRefreshToken();
 
-        // 5) Lưu refresh token mới vào DB
+        // Lưu refresh token mới vào DB
         await _users.UpdateRefreshTokenAsync(
             user.Id,
             newRefreshToken,
             DateTime.UtcNow.AddDays(_refreshDays)
         );
 
-        // 6) Trả về DTO mới
+        // Trả về DTO mới
         return new LoginResponseDto
         {
             AccessToken = newAccessToken,

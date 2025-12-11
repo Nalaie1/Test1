@@ -11,8 +11,10 @@ public class GlobalExceptionMiddleware
         _next = next;
     }
 
+    // Ném ngoại lệ không xử lý và trả về phản hồi lỗi chuẩn
     public async Task InvokeAsync(HttpContext context)
     {
+        // Error handling
         try
         {
             await _next(context);
@@ -29,8 +31,7 @@ public class GlobalExceptionMiddleware
                 Status = 500,
                 Message = "Internal Server Error",
                 CorrelationId = context.Items["CorrelationId"]
-            };
-
+            }; 
             await context.Response.WriteAsJsonAsync(result);
         }
     }

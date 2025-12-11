@@ -1,0 +1,30 @@
+﻿version: '3.9'
+
+services:
+  api:
+    build: ./src/WebApi
+    container_name: api
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_URLS: "http://+:8080"
+      ConnectionStrings__Default: "Server=nalaie\\MSSQLSERVER2022;Database=ConsoleApp2Db;Trusted_Connection=True;TrustServerCertificate=True;"
+      Redis__Host: "redis:6379"
+    depends_on:
+      - sql
+      - redis
+
+  sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sql
+    environment:
+      SA_PASSWORD: "Pass123@"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
