@@ -50,7 +50,7 @@ try
     {
         options.Configuration = builder.Configuration["Redis:Host"];
     });
-    
+
     // Register AutoMapper with the MappingProfile
     builder.Services.AddAutoMapper(typeof(MappingProfile));
 
@@ -147,7 +147,7 @@ try
 
     // Configure Swagger Options
     builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
-    
+
     // Add CORS
     builder.Services.AddCors(options =>
     {
@@ -176,9 +176,7 @@ try
         app.UseSwaggerUI(options =>
         {
             foreach (var desc in provider.ApiVersionDescriptions)
-            {
                 options.SwaggerEndpoint($"/swagger/{desc.GroupName}/swagger.json", desc.GroupName.ToUpperInvariant());
-            }
         });
     }
 
@@ -201,7 +199,6 @@ try
     app.MapControllers();
 
     app.Run();
-
 }
 catch (Exception ex)
 {

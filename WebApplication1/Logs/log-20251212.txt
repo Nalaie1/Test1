@@ -1,0 +1,28 @@
+2025-12-12 11:21:46.442 +07:00 [INF] Starting API
+2025-12-12 11:21:47.541 +07:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-12-12 11:21:47.712 +07:00 [INF] Now listening on: http://localhost:5165
+2025-12-12 11:21:47.718 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-12 11:21:47.721 +07:00 [INF] Hosting environment: Development
+2025-12-12 11:21:47.722 +07:00 [INF] Content root path: C:\Users\Admin\RiderProjects\MiniProject\WebApplication1
+2025-12-12 11:21:52.910 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/swagger/index.html - null null
+2025-12-12 11:21:57.907 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/swagger/index.html - 200 null text/html;charset=utf-8 5051.6897ms
+2025-12-12 11:22:00.313 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/swagger/v1/swagger.json - null null
+2025-12-12 11:22:00.796 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 484.4156ms
+2025-12-12 11:23:17.958 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/swagger/v1/swagger.json - null null
+2025-12-12 11:23:18.249 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 261.2292ms
+2025-12-12 11:23:29.476 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/swagger/index.html - null null
+2025-12-12 11:23:29.521 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/swagger/index.html - 200 null text/html;charset=utf-8 45.6805ms
+2025-12-12 11:23:29.743 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/swagger/v1/swagger.json - null null
+2025-12-12 11:23:29.780 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 37.157ms
+2025-12-12 11:38:33.500 +07:00 [INF] Application is shutting down...
+2025-12-12 14:31:17.940 +07:00 [INF] Starting API
+2025-12-12 14:31:18.558 +07:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-12-12 14:31:18.709 +07:00 [INF] Now listening on: http://localhost:5165
+2025-12-12 14:31:18.716 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-12 14:31:18.720 +07:00 [INF] Hosting environment: Development
+2025-12-12 14:31:18.724 +07:00 [INF] Content root path: C:\Users\Admin\RiderProjects\MiniProject\WebApplication1
+2025-12-12 14:31:20.443 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/swagger/index.html - null null
+2025-12-12 14:31:20.828 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/swagger/index.html - 200 null text/html;charset=utf-8 390.2977ms
+2025-12-12 14:31:21.171 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/swagger/v1/swagger.json - null null
+2025-12-12 14:31:21.357 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 187.6296ms
+2025-12-12 14:31:27.988 +07:00 [INF] Application is shutting down...

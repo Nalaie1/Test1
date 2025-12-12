@@ -17,12 +17,10 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     public void Configure(SwaggerGenOptions options)
     {
         foreach (var desc in _provider.ApiVersionDescriptions)
-        {
             options.SwaggerDoc(desc.GroupName, new OpenApiInfo
             {
                 Title = "Logging của Nam",
                 Version = desc.ApiVersion.ToString()
             });
-        }
     }
 }

@@ -27,9 +27,9 @@ public class PostsController : ControllerBase
 
         // Nếu không có kết quả
         if (pagedResult.Items == null || !pagedResult.Items.Any())
-            return NoContent(); // 204
+            return NoContent();
 
-        return Ok(pagedResult); // 200 + dữ liệu PagedResultDto<PostDto>
+        return Ok(pagedResult);
     }
 
     // GET: api/posts/{id}

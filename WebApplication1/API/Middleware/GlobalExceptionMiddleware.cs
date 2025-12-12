@@ -31,7 +31,7 @@ public class GlobalExceptionMiddleware
                 Status = 500,
                 Message = "Internal Server Error",
                 CorrelationId = context.Items["CorrelationId"]
-            }; 
+            };
             await context.Response.WriteAsJsonAsync(result);
         }
     }
