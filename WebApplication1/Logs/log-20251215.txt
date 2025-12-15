@@ -1,0 +1,44 @@
+2025-12-15 09:24:45.456 +07:00 [INF] Starting API
+2025-12-15 09:24:47.296 +07:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-12-15 09:24:47.648 +07:00 [INF] Now listening on: http://localhost:5165
+2025-12-15 09:24:48.742 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-15 09:24:48.774 +07:00 [INF] Hosting environment: Development
+2025-12-15 09:24:48.833 +07:00 [INF] Content root path: C:\Users\Admin\RiderProjects\MiniProject\WebApplication1
+2025-12-15 09:24:51.975 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/swagger/index.html - null null
+2025-12-15 09:24:53.045 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/swagger/index.html - 200 null text/html;charset=utf-8 1123.9221ms
+2025-12-15 09:24:53.844 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/swagger/v1/swagger.json - null null
+2025-12-15 09:24:54.368 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 525.1539ms
+2025-12-15 09:25:12.673 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/ - null null
+2025-12-15 09:25:12.724 +07:00 [WRN] Failed to determine the https port for redirect.
+2025-12-15 09:25:12.860 +07:00 [INF] HTTP GET / responded 404 in 149.2541 ms
+2025-12-15 09:25:12.881 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/ - 404 0 null 207.9034ms
+2025-12-15 09:25:12.913 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5165/, Response status code: 404
+2025-12-15 09:25:15.690 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/ - null null
+2025-12-15 09:25:15.718 +07:00 [INF] HTTP GET / responded 404 in 7.2706 ms
+2025-12-15 09:25:15.723 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/ - 404 0 null 33.0252ms
+2025-12-15 09:25:15.751 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5165/, Response status code: 404
+2025-12-15 09:27:50.815 +07:00 [INF] Application is shutting down...
+2025-12-15 10:00:48.527 +07:00 [INF] Starting API
+2025-12-15 10:00:53.025 +07:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-12-15 10:00:55.083 +07:00 [INF] Now listening on: http://localhost:5165
+2025-12-15 10:00:55.270 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-15 10:00:55.443 +07:00 [INF] Hosting environment: Development
+2025-12-15 10:00:55.666 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/swagger/index.html - null null
+2025-12-15 10:00:55.713 +07:00 [INF] Content root path: C:\Users\Admin\RiderProjects\MiniProject\WebApplication1
+2025-12-15 10:00:57.281 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/swagger/index.html - 200 null text/html;charset=utf-8 1664.7994ms
+2025-12-15 10:00:58.087 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/swagger/v1/swagger.json - null null
+2025-12-15 10:00:59.359 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 1272.9383ms
+2025-12-15 10:02:07.590 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/swagger/index.html - null null
+2025-12-15 10:02:08.001 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/swagger/index.html - 200 null text/html;charset=utf-8 410.0948ms
+2025-12-15 10:02:08.558 +07:00 [INF] Request starting HTTP/1.1 GET http://localhost:5165/swagger/v1/swagger.json - null null
+2025-12-15 10:02:08.630 +07:00 [INF] Request finished HTTP/1.1 GET http://localhost:5165/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 71.9157ms
+2025-12-15 10:06:01.000 +07:00 [INF] Application is shutting down...
+2025-12-15 10:09:28.369 +07:00 [INF] Starting API
+2025-12-15 10:09:29.428 +07:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-12-15 10:09:29.744 +07:00 [WRN] The ASP.NET Core developer certificate is not trusted. For information about trusting the ASP.NET Core developer certificate, see https://aka.ms/aspnet/https-trust-dev-cert.
+2025-12-15 10:09:29.818 +07:00 [INF] Now listening on: https://localhost:7279
+2025-12-15 10:09:29.823 +07:00 [INF] Now listening on: http://localhost:5165
+2025-12-15 10:09:29.831 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-15 10:09:29.835 +07:00 [INF] Hosting environment: Development
+2025-12-15 10:09:29.838 +07:00 [INF] Content root path: C:\Users\Admin\RiderProjects\MiniProject\WebApplication1
+2025-12-15 10:09:37.294 +07:00 [INF] Application is shutting down...

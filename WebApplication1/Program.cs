@@ -42,13 +42,13 @@ try
     // ===== Add services =====
     builder.Services.AddDbContext<AppDbContext>(options =>
         options.UseSqlServer(
-            "Server=nalaie\\MSSQLSERVER2022;Database=ConsoleApp2Db;Trusted_Connection=True;TrustServerCertificate=True;",
+            builder.Configuration.GetConnectionString("DefaultConnection"),
             sqlOptions => sqlOptions.CommandTimeout(600)));
 
     // A
     builder.Services.AddStackExchangeRedisCache(options =>
     {
-        options.Configuration = builder.Configuration["Redis:Host"];
+        options.Configuration = builder.Configuration.GetValue<string>("Redis:Host");
     });
 
     // Register AutoMapper with the MappingProfile
@@ -90,29 +90,7 @@ try
 
     // Add Memory Cache
     builder.Services.AddMemoryCache();
-
-    // Add JWT Authentication
-    builder.Services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-        .AddJwtBearer(options =>
-        {
-            // Cấu hình xác thực JWT
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = config["JwtSettings:Issuer"],
-                ValidAudience = config["JwtSettings:Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(config["JwtSettings:Secret"]))
-            };
-        });
-
+    
     // Configure Swagger to use JWT Authentication
     builder.Services.AddSwaggerGen(c =>
     {
@@ -159,6 +137,28 @@ try
         });
     });
 
+    // Add JWT Authentication
+    builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            // Cấu hình xác thực JWT
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = config["JwtSettings:Issuer"],
+                ValidAudience = config["JwtSettings:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(config["JwtSettings:Secret"]))
+            };
+        });    
+    
     // Add Authorization Policies
     builder.Services.AddAuthorization(options =>
     {
@@ -181,8 +181,9 @@ try
     }
 
     app.UseSerilogRequestLogging();
-    app.UseHttpsRedirection();
     app.UseMiddleware<CorrelationIdMiddleware>();
+    app.UseMiddleware<GlobalExceptionMiddleware>();
+    app.UseHttpsRedirection();
 
     // Enable CORS
     app.UseCors("AllowAll");
@@ -193,7 +194,6 @@ try
 
     // Middleware
     app.UseMiddleware<RoleMiddleware>();
-    app.UseMiddleware<GlobalExceptionMiddleware>();
 
     // Map controllers
     app.MapControllers();
